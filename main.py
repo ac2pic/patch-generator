@@ -63,8 +63,9 @@ def fixPatches(elfFh, elfName, patchSet):
 
         match = elfFh.read(matchLen)
         patchEntry[1] = match
+        patchEntry[2] = bytes.fromhex(patchEntry[2].replace(" ", "").strip())
         if adjustment > 0:
-            patchEntry[2] = match[0:adjustment] + bytes.fromhex(patchEntry[2].replace(" ", "").strip())
+            patchEntry[2] = match[0:adjustment] + patchEntry[2]
 
 for binName, patches in patch_data.items():
     print(binName if len(binName) else "eboot.bin")
